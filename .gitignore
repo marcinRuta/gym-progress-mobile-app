@@ -9,3 +9,8 @@
 /BackEnd/ClientApi/bin/Debug/net5.0
 /BackEnd/ClientApi/obj
 /BackEnd/DataBaseApi/.vs/DataBaseApi/DesignTimeBuild
+/BackEnd/ClientApi.Domain/obj
+/BackEnd/ClientApi.Domain/SeedWork
+/BackEnd/ClientApi.Infrastructure/obj
+/BackEnd/DataBaseApi.Domain/obj
+/BackEnd/DataBaseApi.Infrastructure/obj
