@@ -3,3 +3,9 @@
 ################################################################################
 
 /BackEnd/DataBaseApi/.vs/DataBaseApi/v16
+/BackEnd/DataBaseApi/bin/Debug/net5.0
+/BackEnd/DataBaseApi/obj
+/BackEnd/ClientApi/.vs/ClientApi/v16
+/BackEnd/ClientApi/bin/Debug/net5.0
+/BackEnd/ClientApi/obj
+/BackEnd/DataBaseApi/.vs/DataBaseApi/DesignTimeBuild
