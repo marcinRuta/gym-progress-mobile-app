@@ -2,7 +2,8 @@
 
 namespace DataBaseApi.Infrastructure
 {
-    public class Class1
+    public class Constants
     {
+        public static string connectionString = Environment.GetEnvironmentVariable("databaseconnection");
     }
 }

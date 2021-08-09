@@ -19,4 +19,9 @@
     <Folder Include="Application\Queries\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataBaseApi.Domain\DataBaseApi.Domain.csproj" />
+    <ProjectReference Include="..\DataBaseApi.Infrastructure\DataBaseApi.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

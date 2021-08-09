@@ -3,6 +3,7 @@
 namespace DataBaseApi.Infrastructure
 {
     public class Class1
+
     {
     }
 }
