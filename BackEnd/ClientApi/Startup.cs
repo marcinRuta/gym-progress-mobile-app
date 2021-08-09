@@ -1,3 +1,5 @@
+using ClientApi.Application.DataServiceClients;
+using ClientApi.Application.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +34,8 @@ namespace ClientApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClientApi", Version = "v1" });
             });
+            services.AddTransient<IClientApiQueriesHandler, ClientApiQueryHandler>();
+            services.AddTransient<IDataBaseServiceClient, DataBaseServiceClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
