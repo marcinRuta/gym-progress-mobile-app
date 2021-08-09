@@ -1,3 +1,7 @@
+using DataBaseApi.Application.Commands;
+using DataBaseApi.Application.Queries;
+using DataBaseApi.Domain.Daos;
+using DataBaseApi.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +36,10 @@ namespace DataBaseApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DataBaseApi", Version = "v1" });
             });
+            services.AddSingleton<IDataBaseRepository, DataBaseRepository>();
+            services.AddTransient<IDataBaseQueriesHandler, DataBaseQueriesHandler>();
+            services.AddTransient<ICommandHandler, DataBaseCommandsHandler>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
