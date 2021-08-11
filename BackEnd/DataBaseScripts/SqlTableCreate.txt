@@ -1,0 +1,52 @@
+BEGIN TRANSACTION;
+GO
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NULL,
+    [Surname] nvarchar(max) NULL,
+    [Email] nvarchar(max) NULL,
+    [TelephoneNumber] int NULL,
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+GO
+
+CREATE TABLE [Exercises] (
+    [Id] int NOT NULL IDENTITY,
+    [ExerciseName] nvarchar(max) NULL,
+    CONSTRAINT [PK_Exercises] PRIMARY KEY ([Id])
+);
+GO
+
+CREATE TABLE [TrainingSessions] (
+    [Id] int NOT NULL IDENTITY,
+    [SessionDate] date NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_TrainingSessions] PRIMARY KEY ([Id]),
+    CONSTRAINT FK_UsersSessions FOREIGN KEY (UserId)
+    REFERENCES Users(Id)
+);
+GO
+
+CREATE TABLE [ExerciseSessions] (
+    [Id] int NOT NULL IDENTITY,
+    [ExerciseId] int NOT NULL,
+    CONSTRAINT [PK_ExerciseSessions] PRIMARY KEY ([Id]),
+    CONSTRAINT FK_ExerciseSession FOREIGN KEY (ExerciseId)
+    REFERENCES Exercises(Id),
+);
+GO
+
+CREATE TABLE [Sets] (
+    [Id] int NOT NULL IDENTITY,
+    [ExerciseSessionId] int NOT NULL,
+    [Weight] nvarchar(max) NULL,
+    [Repetitions] nvarchar(max) NULL,
+    CONSTRAINT [PK_Sets] PRIMARY KEY ([Id]),
+    CONSTRAINT FK_ExerciseSet FOREIGN KEY (ExerciseSessionId)
+    REFERENCES ExerciseSessions(Id),
+);
+GO
+
+COMMIT;
+GO
+
