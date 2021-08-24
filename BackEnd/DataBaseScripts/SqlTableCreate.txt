@@ -47,6 +47,17 @@ CREATE TABLE [Sets] (
 );
 GO
 
+CREATE TABLE [UsersCredentials] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [Username] nvarchar(max) NULL,
+    [Password] nvarchar(max) NULL,
+    CONSTRAINT [PK_UsersCredentials] PRIMARY KEY ([Id]),
+    CONSTRAINT FK_UserCredentials FOREIGN KEY (UserId)
+    REFERENCES Users(Id),
+);
+GO
+
 COMMIT;
 GO
 
