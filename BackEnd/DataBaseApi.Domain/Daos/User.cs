@@ -12,13 +12,15 @@ namespace DataBaseApi.Domain.Daos
         public string Name { get; private set; }
         public string Surname { get; private set; }
         public string Email { get; private set; }
+        public string TelephoneNumber { get; private set; }
         public IList<TrainingSession> TrainingSessions { get; private set; } = new List<TrainingSession>();
 
-        public User(int id, string name, string surname, string email) : base(id)
+        public User(int id, string name, string surname, string email, string telephoneNumber) : base(id)
         {
             Name = name;
             Surname = surname;
             Email = email;
+            TelephoneNumber = telephoneNumber;
         }
         public void AddTrainingSession(TrainingSession session)
         {

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.gymtracker">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GymTracker">
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.GymTracker.NoActionBar">
             <intent-filter>
@@ -19,6 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RegisterActivity"
+            android:theme="@style/Theme.GymTracker.NoActionBar"
+            />
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.GymTracker.NoActionBar"/>
+
     </application>
 
 </manifest>

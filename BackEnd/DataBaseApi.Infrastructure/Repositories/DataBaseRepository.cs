@@ -1,5 +1,6 @@
 ﻿using DataBaseApi.Domain.Daos;
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -17,13 +18,13 @@ namespace DataBaseApi.Infrastructure
         {
             const string getAddedRowIdQueryQuery = @"SELECT CAST(SCOPE_IDENTITY() as int)";
 
-            
+
             using (var dbConnection = new SqlConnection(Constants.connectionString))
             {
-               
+
                 dbConnection.Open();
 
-                
+
                 using (DbTransaction transaction = dbConnection.BeginTransaction())
                 {
                     try
@@ -41,7 +42,7 @@ namespace DataBaseApi.Infrastructure
                         const string insertDoctorSpecializationQuery = @"INSERT INTO DoctorSpecialization (DoctorId, SpecializationId) VALUES (@doctorId,@specializationId);";
                         foreach (var specializationId in specializationIds)
                             await dbConnection.QueryAsync(insertDoctorSpecializationQuery, new { doctorId = doctorId, specializationId = specializationId }, transaction);*/
-                        
+
                         transaction.Commit();
                     }
                     catch (Exception e)
@@ -53,18 +54,19 @@ namespace DataBaseApi.Infrastructure
             }
         }
 
-        
-        /*public async Task<IEnumerable<Doctor>> GetAllAsync()
+
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
+
+            
             using (var dbConnection = new SqlConnection(Constants.connectionString))
             {
+                dbConnection.Open();
 
-                //otwarcie połączenia tym razem nie jest konieczne, Dapper zrobi to automatycznie w razie potrzeby
-                //poprzednim razem otwarcia połączenia wymagało utworzenie transakcji
-                const string selectDoctorSpecializationQuery = @"SELECT * FROM DoctorSpecialization";
-
-                var doctorsSpecializations = (await dbConnection.QueryAsync(selectDoctorSpecializationQuery)).Select(x => new { SpecializationId = x.SpecializationId, DoctorId = x.DoctorId });
-
+                const string selectSetsQuery = @"SELECT * FROM Sets";
+                
+                var userSets = (await dbConnection.QueryAsync(selectSetsQuery)).Select(x => new { SpecializationId = x.SpecializationId, DoctorId = x.DoctorId });
+                /*
                 const string selectDoctorQuery = @"SELECT * FROM Doctor";
 
                 var doctors = await dbConnection.QueryAsync<Doctor>(selectDoctorQuery);
@@ -80,9 +82,9 @@ namespace DataBaseApi.Infrastructure
                     doctor.AddSpecializations(specializationsForGivenDoctor);
                 }
 
-                return doctors;
+                return doctors;*/
             }
-        }*/
+        }
 
    
 
