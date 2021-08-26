@@ -8,6 +8,7 @@ namespace DataBaseApi.Domain.Daos
 {
     public interface IDataBaseRepository
     {
-
+        Task AddUserCredentials(UserCredentials userCredentials);
+        int CheckAndReturnUsernamePasswordCombination(string username, string password);
     }
 }

@@ -1,8 +1,11 @@
 ﻿using DataBaseApi.Domain.Daos;
 using System;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
+using Dapper;
+using System.Data.SqlClient;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataBaseApi.Infrastructure
 {
@@ -13,35 +16,37 @@ namespace DataBaseApi.Infrastructure
         {
         }
 
-        public async Task AddUserAsync(User user)
+        public async Task AddUserCredentials(UserCredentials userCredentials)
         {
             const string getAddedRowIdQueryQuery = @"SELECT CAST(SCOPE_IDENTITY() as int)";
 
-            
+
             using (var dbConnection = new SqlConnection(Constants.connectionString))
             {
-               
+
                 dbConnection.Open();
 
-                
+
                 using (DbTransaction transaction = dbConnection.BeginTransaction())
                 {
                     try
                     {
-                        /*const string insertDoctorQuery = @"INSERT INTO Doctor (Surname) VALUES (@surname);";
-                        
-                        int doctorId = await dbConnection.QueryFirstAsync<int>(insertDoctorQuery + ";" + getAddedRowIdQueryQuery, new { surname = doctor.Surname }, transaction);
+                        const string insertUserCredentialsQuery = @"INSERT INTO UsersCredentials (Username, Password) VALUES (@username, @password);";
 
-                        var specializationIds = new List<int>();
+                        int UserCredentialsId = await dbConnection.QueryFirstAsync<int>(insertUserCredentialsQuery + ";" + getAddedRowIdQueryQuery, new { username = userCredentials.Username, password = userCredentials.Password }, transaction);
 
-                        const string insertSpecializationQuery = @"INSERT INTO Specialization (Type, GrantedAt) VALUES (@type,ą@grantedAt);";
-                        foreach (var specialization in doctor.Specializations)
-                            specializationIds.Add(await dbConnection.QueryFirstAsync<int>(insertSpecializationQuery + ";" + getAddedRowIdQueryQuery, new { type = specialization.Type, grantedAt = specialization.GrantedAt }, transaction));
 
-                        const string insertDoctorSpecializationQuery = @"INSERT INTO DoctorSpecialization (DoctorId, SpecializationId) VALUES (@doctorId,@specializationId);";
-                        foreach (var specializationId in specializationIds)
-                            await dbConnection.QueryAsync(insertDoctorSpecializationQuery, new { doctorId = doctorId, specializationId = specializationId }, transaction);*/
-                        
+                        if (!(userCredentials.UserDetails == null))
+                        {
+                            const string insertUserQuery = @"INSERT INTO Users (Name, Surname, Email, TelephoneNumber) VALUES (@name, @surname, @email, @telephoneNumber);";
+                            User newUser = userCredentials.UserDetails;
+                            int UserId = await dbConnection.QueryFirstAsync<int>(insertUserQuery + ";" + getAddedRowIdQueryQuery, new { name = newUser.Name, surname = newUser.Surname, email = newUser.Email, telephoneNumber = newUser.TelephoneNumber }, transaction);
+
+                            const string updateUserCredentialsQuery = @"UPDATE UsersCredentials SET UserID =@userId WHERE Id=@userCredentialsId";
+
+                            var affectedRow = dbConnection.Execute(updateUserCredentialsQuery, new { userId = UserId, userCredentialsId = UserCredentialsId }, transaction);
+                        }
+
                         transaction.Commit();
                     }
                     catch (Exception e)
@@ -53,7 +58,40 @@ namespace DataBaseApi.Infrastructure
             }
         }
 
-        
+        public int CheckAndReturnUsernamePasswordCombination(string username, string password)
+        {
+            using (var dbConnection = new SqlConnection(Constants.connectionString))
+            {
+
+                dbConnection.Open();
+
+
+                using (DbTransaction transaction = dbConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        const string selectCredentialQuery = @"Select Id FROM UsersCredentials Where Username=@username and Password=@password";
+
+                       var UserCredentialsId =  dbConnection.Query<int>(selectCredentialQuery ,new { username = username, password = password }, transaction);
+
+                        List<int> idsAsInt = UserCredentialsId.ToList();
+
+
+
+                        transaction.Commit();
+                        return idsAsInt[0];
+                    }
+                    catch (Exception e)
+                    {
+                        transaction.Rollback();
+                        throw;
+                        return  0;
+                    }
+                }
+            }
+        }
+
+
         /*public async Task<IEnumerable<Doctor>> GetAllAsync()
         {
             using (var dbConnection = new SqlConnection(Constants.connectionString))
@@ -84,7 +122,7 @@ namespace DataBaseApi.Infrastructure
             }
         }*/
 
-   
+
 
     }
 }

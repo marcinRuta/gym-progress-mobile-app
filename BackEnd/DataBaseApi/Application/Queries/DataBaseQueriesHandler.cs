@@ -1,4 +1,5 @@
-﻿using DataBaseApi.Domain.Daos;
+﻿using DataBaseApi.Application.Dtos;
+using DataBaseApi.Domain.Daos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,18 @@ namespace DataBaseApi.Application.Queries
             this.dataBaseRepository = dataBaseRepository;
         }
 
+        public Response CheckCombination(string username, string password)
+        {
+            var result = dataBaseRepository.CheckAndReturnUsernamePasswordCombination(username,password);
+
+            if (result == 0)
+            {
+                return new Response("Invalid combination");
+            }
+            else
+            {
+                return new Response("Valid combination");
+            }
+        }
     }
 }

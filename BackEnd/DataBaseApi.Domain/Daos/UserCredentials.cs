@@ -19,7 +19,7 @@ namespace DataBaseApi.Domain.Daos
             Password = password;
         }
 
-        public void AddUser(User user)
+        public void AddUserDetails(User user)
         {
             this.UserDetails = user;
         }
