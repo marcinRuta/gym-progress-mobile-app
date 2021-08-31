@@ -10,5 +10,6 @@ namespace DataBaseApi.Domain.Daos
     {
         Task AddUserCredentials(UserCredentials userCredentials);
         int CheckAndReturnUsernamePasswordCombination(string username, string password);
+        Task AddUserDetails(User userDetails, int credentialsId);
     }
 }

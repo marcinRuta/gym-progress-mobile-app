@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ClientApi.Application.Commands;
+using ClientApi.Application.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -28,6 +30,7 @@ namespace ClientApi.Application.DataServiceClients
             var response = await client.SendAsync(request);
 
             using var responseStream = await response.Content.ReadAsStreamAsync();
+          
 
             var options = new JsonSerializerOptions
             {
@@ -36,6 +39,32 @@ namespace ClientApi.Application.DataServiceClients
 
             return await JsonSerializer.DeserializeAsync<IEnumerable<string>>(responseStream, options);
 
+        }
+
+        public async Task<Response> LoginUser(AddUserCredentialCommand credential)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post,
+                Constants.dataBaseAddress+$"registerUser");
+
+            request.Headers.Add("Accept", "application/json");
+
+            var client = clientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            using var responseStream =  await response.Content.ReadAsStreamAsync();
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+
+            return  await JsonSerializer.DeserializeAsync<Response>(responseStream, options);
+        }
+
+        public Response RegisterUser(AddUserCredentialCommand credential)
+        {
+            throw new NotImplementedException();
         }
     }
 }

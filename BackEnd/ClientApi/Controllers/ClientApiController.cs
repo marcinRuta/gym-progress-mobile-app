@@ -1,4 +1,6 @@
-﻿using ClientApi.Application.Queries;
+﻿using ClientApi.Application.Commands;
+using ClientApi.Application.Dtos;
+using ClientApi.Application.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -26,5 +28,19 @@ namespace ClientApi.Controllers
         {
             return new List<string> { "test", "test" };
         }
+
+        [HttpPost("registerUser")]
+        public Response RegisterUser([FromBody] AddUserCredentialCommand credential)
+        {
+
+            return clientApiQueriesHandler.RegisterUser(credential).Result;
+        }
+        [HttpPost("loginUser")]
+        public Response LoginUser([FromBody] AddUserCredentialCommand credential)
+        {
+
+            return clientApiQueriesHandler.LoginUser(credential).Result;
+        }
+
     }
 }

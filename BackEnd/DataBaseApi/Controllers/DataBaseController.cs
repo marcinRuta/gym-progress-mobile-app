@@ -52,7 +52,8 @@ namespace DataBaseApi.Controllers
         [HttpPost("addUserDetails")]
         public Response AddUserDetails([FromHeader] string username, string password, [FromBody] AddUserDetailsCommand details)
         {
-            return new Response("test");
+            var credentials = new UserCredential(username, password);
+            return dataBaseCommandHandler.AddUserDetails(details, credentials);
         }
 
 

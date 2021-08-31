@@ -72,7 +72,7 @@ namespace DataBaseApi.Infrastructure
                     {
                         const string selectCredentialQuery = @"Select Id FROM UsersCredentials Where Username=@username and Password=@password";
 
-                       var UserCredentialsId =  dbConnection.Query<int>(selectCredentialQuery ,new { username = username, password = password }, transaction);
+                        var UserCredentialsId = dbConnection.Query<int>(selectCredentialQuery, new { username = username, password = password }, transaction);
 
                         List<int> idsAsInt = UserCredentialsId.ToList();
 
@@ -83,13 +83,45 @@ namespace DataBaseApi.Infrastructure
                     }
                     catch (Exception e)
                     {
-                        transaction.Rollback();
-                        throw;
-                        return  0;
+
+                        return 0;
                     }
                 }
             }
         }
+        public async Task AddUserDetails(User userDetails, int credentialId)
+        {
+            const string getAddedRowIdQueryQuery = @"SELECT CAST(SCOPE_IDENTITY() as int)";
+
+
+            using (var dbConnection = new SqlConnection(Constants.connectionString))
+            {
+                dbConnection.Open();
+
+                using (DbTransaction transaction = dbConnection.BeginTransaction())
+                {
+                    const string insertUserDetailsQuery = @"INSERT INTO Users (Name, Surname, Email, TelephoneNumber) VALUES (@name, @surname, @email, @telephoneNumber);";
+
+                    const string updateUserCredentialsQuery = @"UPDATE UsersCredentials SET UserID =@userId WHERE Id=@userCredentialsId";
+
+
+                    try
+                    {
+                        int UserDetailsId = await dbConnection.QueryFirstAsync<int>(insertUserDetailsQuery + ";" + getAddedRowIdQueryQuery, new { name = userDetails.Name, surname = userDetails.Surname, email = userDetails.Email, telephoneNumber = userDetails.TelephoneNumber }, transaction);
+
+                        var affectedRow = dbConnection.Execute(updateUserCredentialsQuery, new { userId = UserDetailsId, userCredentialsId = credentialId }, transaction);
+                        transaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+
 
 
         /*public async Task<IEnumerable<Doctor>> GetAllAsync()
