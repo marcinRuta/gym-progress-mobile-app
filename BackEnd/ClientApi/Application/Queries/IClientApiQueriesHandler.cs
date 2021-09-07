@@ -9,7 +9,8 @@ namespace ClientApi.Application.Queries
 {
     public interface IClientApiQueriesHandler
     {
-        Task<Response> RegisterUser(AddUserCredentialCommand credential);
-        Task<Response> LoginUser(AddUserCredentialCommand credential);
+        Response RegisterUser(AddUserCredentialCommand credential);
+        Response LoginUser(AddUserCredentialCommand credential);
+        Response AddUserDetails(AddUserDetailsCommand details, UserCredential credentials);
     }
 }

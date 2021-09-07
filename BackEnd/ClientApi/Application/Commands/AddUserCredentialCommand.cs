@@ -9,5 +9,11 @@ namespace ClientApi.Application.Commands
     {
         public string Username { get; set; }
         public string Password { get; set; }
+
+        public AddUserCredentialCommand(string username, string password)
+        {
+            Username = username;
+            Password = password;
+        }
     }
 }

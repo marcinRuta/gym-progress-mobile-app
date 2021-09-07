@@ -1,6 +1,7 @@
 ﻿using ClientApi.Application.Commands;
 using ClientApi.Application.Dtos;
 using ClientApi.Application.Queries;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,11 +17,14 @@ namespace ClientApi.Controllers
     {
         private readonly IClientApiQueriesHandler clientApiQueriesHandler;
 
+        
+
         private readonly ILogger<ClientApiController> _logger;
 
-        public ClientApiController(ILogger<ClientApiController> logger)
+        public ClientApiController(ILogger<ClientApiController> logger, IClientApiQueriesHandler clientApiQueriesHandler)
         {
             _logger = logger;
+            this.clientApiQueriesHandler = clientApiQueriesHandler;
         }
 
         [HttpGet]
@@ -33,13 +37,20 @@ namespace ClientApi.Controllers
         public Response RegisterUser([FromBody] AddUserCredentialCommand credential)
         {
 
-            return clientApiQueriesHandler.RegisterUser(credential).Result;
+            return this.clientApiQueriesHandler.RegisterUser(credential);
         }
         [HttpPost("loginUser")]
-        public Response LoginUser([FromBody] AddUserCredentialCommand credential)
+        public Response LoginUser([FromHeader] string username, [FromHeader] string password)
         {
+            var credential = new AddUserCredentialCommand(username, password);
+            return this.clientApiQueriesHandler.LoginUser(credential);
+        }
 
-            return clientApiQueriesHandler.LoginUser(credential).Result;
+        [HttpPost("addUserDetails")]
+        public Response AddUserDetails([FromHeader] string username, [FromHeader] string password, [FromBody] AddUserDetailsCommand details)
+        {
+            var credentials = new UserCredential(username, password);
+            return this.clientApiQueriesHandler.AddUserDetails(details, credentials);
         }
 
     }

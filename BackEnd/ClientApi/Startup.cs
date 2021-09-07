@@ -34,6 +34,7 @@ namespace ClientApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClientApi", Version = "v1" });
             });
+            services.AddHttpClient();
             services.AddTransient<IClientApiQueriesHandler, ClientApiQueryHandler>();
             services.AddTransient<IDataBaseServiceClient, DataBaseServiceClient>();
         }

@@ -7,6 +7,6 @@ namespace ClientApi
 {
     public class Constants
     {
-        public const string dataBaseAddress = "https://localhost:44351/";
+        public const string dataBaseAddress = "https://localhost:44329/DataBase/";
     }
 }

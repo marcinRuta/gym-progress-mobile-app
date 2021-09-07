@@ -56,3 +56,6 @@ ehthumbs.db
 Thumbs.db
 /BackEnd/DataBaseApi.Infrastructure/bin/Debug/net5.0
 /BackEnd/DataBaseApi.Domain/bin/Debug/net5.0
+/BackEnd/ClientApi/.vs/ClientApi/config
+/BackEnd/ClientApi/.vs/ClientApi/config
+/BackEnd/DataBaseApi/.vs/DataBaseApi/config

@@ -11,6 +11,6 @@ namespace ClientApi.Application.DataServiceClients
     {
         Task <Response> RegisterUser(AddUserCredentialCommand credential);
         Task <Response> LoginUser(AddUserCredentialCommand credential);
-
+        Task<Response> AddUserDetails(AddUserDetailsCommand details, UserCredential credentials);
     }
 }

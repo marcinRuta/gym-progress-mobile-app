@@ -17,14 +17,19 @@ namespace ClientApi.Application.Queries
             this.dataBaseServiceClient = dataBaseServiceClient;
         }
 
-        Task<Response> LoginUser(AddUserCredentialCommand credential)
+        public Response AddUserDetails(AddUserDetailsCommand details, UserCredential credentials)
         {
-            return dataBaseServiceClient.LoginUser(credential);
+            return this.dataBaseServiceClient.AddUserDetails(details, credentials).Result;
         }
 
-        Task<Response> RegisterUser(AddUserCredentialCommand credential)
+        public Response LoginUser(AddUserCredentialCommand credential)
         {
-            return dataBaseServiceClient.LoginUser(credential);
+            return dataBaseServiceClient.LoginUser(credential).Result;
+        }
+
+        public Response RegisterUser(AddUserCredentialCommand credential)
+        {
+            return dataBaseServiceClient.RegisterUser(credential).Result;
         }
     }
 }

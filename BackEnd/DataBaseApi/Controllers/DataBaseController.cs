@@ -35,8 +35,8 @@ namespace DataBaseApi.Controllers
             return new List<string> { "test", "test" };
         }
 
-        [HttpGet("UsernamePasswordConfimation")]
-        public Response CheckCombination([FromHeader] string username, string password)
+        [HttpGet("usernamePasswordConfimation")]
+        public Response CheckCombination([FromHeader] string username, [FromHeader] string password)
         {
             return dataBaseQueriesHandler.CheckCombination(username, password);
         }
@@ -50,7 +50,7 @@ namespace DataBaseApi.Controllers
         }
 
         [HttpPost("addUserDetails")]
-        public Response AddUserDetails([FromHeader] string username, string password, [FromBody] AddUserDetailsCommand details)
+        public Response AddUserDetails([FromHeader] string username, [FromHeader] string password, [FromBody] AddUserDetailsCommand details)
         {
             var credentials = new UserCredential(username, password);
             return dataBaseCommandHandler.AddUserDetails(details, credentials);
