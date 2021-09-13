@@ -25,7 +25,8 @@
         android:id="@+id/edittext_username"
         android:layout_width="212dp"
         android:layout_height="54dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
+        android:autofillHints=""
         android:background="#ffffff"
         android:drawableLeft="@drawable/username"
         android:hint="@string/username"
@@ -33,8 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/edittext_password"
@@ -66,22 +66,19 @@
         android:id="@+id/textView"
         android:layout_width="118dp"
         android:layout_height="33dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginBottom="148dp"
+        android:layout_marginStart="116dp"
         android:text="@string/not_registered"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_login"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.191" />
 
     <TextView
         android:id="@+id/textview_register"
         android:layout_width="125dp"
         android:layout_height="49dp"
-        android:layout_marginEnd="88dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="76dp"
         android:paddingLeft="10dp"
         android:text="@string/register"
         android:textColor="#ffffff"
@@ -89,7 +86,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_login"
-        app:layout_constraintVertical_bias="0.09" />
+        app:layout_constraintVertical_bias="0.208" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

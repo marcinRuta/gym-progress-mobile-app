@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="193dp"
-        android:layout_height="193dp"
+        android:layout_width="192dp"
+        android:layout_height="173dp"
         android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         android:id="@+id/edittext_username"
         android:layout_width="212dp"
         android:layout_height="54dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:background="#ffffff"
         android:drawableLeft="@drawable/username"
         android:hint="@string/username"
@@ -65,10 +65,10 @@
         android:id="@+id/button_register"
         android:layout_width="212dp"
         android:layout_height="54dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:text="@string/register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edittext_cnf_password" />
 
@@ -76,25 +76,27 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginStart="120dp"
         android:text="@string/already_registered"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_register"
+        app:layout_constraintVertical_bias="0.196" />
 
     <TextView
         android:id="@+id/textview_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="124dp"
-        android:layout_marginBottom="68dp"
+        android:layout_width="63dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="108dp"
         android:paddingLeft="10dp"
         android:text="@string/login"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_register"
+        app:layout_constraintVertical_bias="0.213" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
