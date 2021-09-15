@@ -23,10 +23,22 @@ namespace DataBaseApi.Application.Commands
         public Response RegisterUser(AddUserCredentialCommand credentialCommand)
         {
             UserCredentials userCredentials = new(1, credentialCommand.Username, credentialCommand.Password);
-            dataBaseRepository.AddUserCredentials(userCredentials);
-            var response = new Response("Succesufully registered");
 
-            return  response;
+
+            var id = dataBaseRepository.CheckAndReturnUsernamePasswordCombination(userCredentials.Username, userCredentials.Password);
+            if (id != 0)
+            {
+                var failedResponse = new Response("Already registered");
+
+                return failedResponse;
+            }
+            else
+            {
+                dataBaseRepository.AddUserCredentials(userCredentials);
+                var response = new Response("Succesufully registered");
+
+                return response;
+            }
         }
 
         public Response AddUserDetails(AddUserDetailsCommand userDetailsCommand, UserCredential credentials)

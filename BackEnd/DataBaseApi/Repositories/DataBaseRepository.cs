@@ -1,13 +1,15 @@
-﻿using DataBaseApi.Domain.Daos;
-using System;
+﻿using System;
 using System.Data.Common;
 using System.Threading.Tasks;
 using Dapper;
-using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
+using DataBaseApi.Domain.Daos;
+using DataBaseApi.Infrastructure;
+using System.Data.SqlClient;
 
-namespace DataBaseApi.Infrastructure
+namespace DataBaseApi.Domain
 {
     public class DataBaseRepository : IDataBaseRepository
 
@@ -21,7 +23,7 @@ namespace DataBaseApi.Infrastructure
             const string getAddedRowIdQueryQuery = @"SELECT CAST(SCOPE_IDENTITY() as int)";
 
 
-            using (var dbConnection = new SqlConnection(Constants.connectionString))
+            using (var dbConnection = new SqlConnection (Constants.connectionString))
             {
 
                 dbConnection.Open();

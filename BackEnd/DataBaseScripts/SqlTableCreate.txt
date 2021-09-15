@@ -49,7 +49,7 @@ GO
 
 CREATE TABLE [UsersCredentials] (
     [Id] int NOT NULL IDENTITY,
-    [UserId] int NOT NULL,
+    [UserId] int NULL,
     [Username] nvarchar(max) NULL,
     [Password] nvarchar(max) NULL,
     CONSTRAINT [PK_UsersCredentials] PRIMARY KEY ([Id]),

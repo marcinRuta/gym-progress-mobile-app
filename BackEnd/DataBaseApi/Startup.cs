@@ -1,5 +1,6 @@
 using DataBaseApi.Application.Commands;
 using DataBaseApi.Application.Queries;
+using DataBaseApi.Domain;
 using DataBaseApi.Domain.Daos;
 using DataBaseApi.Infrastructure;
 using Microsoft.AspNetCore.Builder;

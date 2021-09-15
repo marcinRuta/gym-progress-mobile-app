@@ -59,3 +59,9 @@ Thumbs.db
 /BackEnd/ClientApi/.vs/ClientApi/config
 /BackEnd/ClientApi/.vs/ClientApi/config
 /BackEnd/DataBaseApi/.vs/DataBaseApi/config
+/BackEnd/ClientApi/Properties/PublishProfiles
+/BackEnd/ClientApi/bin/Release/net5.0
+/BackEnd/DataBaseApi/bin/Release/net5.0
+/BackEnd/DataBaseApi/Properties/PublishProfiles
+/BackEnd/sqlserver/data
+/BackEnd/sqlserver/log

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>920026d7-d020-4d6b-ae53-d703757f8452</UserSecretsId>
-    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
@@ -13,11 +13,7 @@
     <PackageReference Include="DapperExtensions" Version="1.7.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DataBaseApi.Domain\DataBaseApi.Domain.csproj" />
-    <ProjectReference Include="..\DataBaseApi.Infrastructure\DataBaseApi.Infrastructure.csproj" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
 </Project>
