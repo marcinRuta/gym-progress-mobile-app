@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
     private static Retrofit retrofit = null;
-    private static final String urlAddress= "https://accessmanager.azurewebsites.net";
+    private static final String urlAddress= "http://10.0.2.2:49160/";
     static Retrofit getClient() {
 
         Gson gson = new GsonBuilder()

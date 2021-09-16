@@ -2,9 +2,17 @@ package com.example.gymtracker.DTO;
 
 public class ResponseData {
 
-    private String Response;
+    private String responseDescription;
 
     public ResponseData(String response) {
-        Response = response;
+        responseDescription = response;
+    }
+
+    public String getResponseDescription() {
+        return responseDescription;
+    }
+
+    public void setResponseDescription(String responseDescription) {
+        this.responseDescription = responseDescription;
     }
 }

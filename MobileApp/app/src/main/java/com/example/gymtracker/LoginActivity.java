@@ -13,6 +13,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gymtracker.DTO.LogData;
+import com.example.gymtracker.DTO.ResponseData;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -38,15 +40,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 String username = mTextUsername.getText().toString();
                 String password = mTextPassword.getText().toString();
-                //if(validateLogin(username, password)){
+                if(validateLogin(username, password)){
 
-                    /*doLogin(username, password);*/
-               // }
+                    doLogin(username, password);
+                }
 
 
 
-                Intent homeIntent = new Intent (LoginActivity.this, MainActivity.class);
-                startActivity(homeIntent);
+                //Intent homeIntent = new Intent (LoginActivity.this, MainActivity.class);
+               // startActivity(homeIntent);
 
 
             }
@@ -77,29 +79,29 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    /*private void doLogin(final String username,final String password){
-        LogData log=new LogData(mEncryptor.encrypt(username),mEncryptor.encrypt(password));
+    private void doLogin(final String username,final String password){
 
-        Call call = apiInterface.logUser(log);
+
+        Call call = apiInterface.logUser(username, password);
 
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 Log.d(Tag,"zalogowano api");
                 if(response.isSuccessful()){
-                    LogResponse resObj = (LogResponse) response.body();
+                    ResponseData resObj = (ResponseData) response.body();
                     Log.d(Tag,"zalogowano api");
 
-                    if(resObj.getResp().equals("Nie ma takiego użytownika!")){
+                    if(resObj.getResponseDescription().equals("Invalid combination")){
 
                         Toast.makeText(LoginActivity.this, "The username or password is incorrect", Toast.LENGTH_SHORT).show();
 
                     } else {
                         Log.d(Tag,"zalogowano api");
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        intent.putExtra("ID", resObj.getResp());
-                        intent.putExtra("username",log.Nazwa);
-                        intent.putExtra("password",log.Haslo);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+                        intent.putExtra("username",username);
+                        intent.putExtra("password",password);
                         startActivity(intent);
 
                     }
@@ -114,5 +116,5 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }*/
+    }
 }

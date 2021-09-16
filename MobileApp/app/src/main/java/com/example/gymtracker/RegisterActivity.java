@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.gymtracker.DTO.LogData;
+import com.example.gymtracker.DTO.ResponseData;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(validateRegister(user, pwd, cnf_pwd)){
 
-                 /*doRegister(user, pwd);*/
+                 doRegister(user, pwd);
                  }
             }
         });
@@ -83,12 +86,12 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
-   /* private void doRegister(final String username, final String password) {
-        String address= "TestowyTest";
-        String addresss = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        RegData register = new RegData(mEncryptor.encrypt(username),mEncryptor.encrypt(password), mEncryptor.encrypt(address));
+    private void doRegister(final String username, final String password) {
 
-        Call call = apiInterface.registerUser(register);
+
+        LogData regData= new LogData(username, password);
+
+        Call call = apiInterface.registerUser(regData);
 
         call.enqueue(new Callback() {
             @Override
@@ -98,32 +101,29 @@ public class RegisterActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
 
-                    LogResponse resObj = (LogResponse) response.body();
+                    ResponseData resObj = (ResponseData) response.body();
 
-                    switch (resObj.getResp()) {
-                        case ("Udało się zarejestrować!"):
-                            Toast.makeText(com.example.application.RegisterActivity.this, "U have registered correctly", Toast.LENGTH_SHORT).show();
-                            //Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            //startActivity(intent);
+                    switch (resObj.getResponseDescription()) {
+                        case ("Succesufully registered"):
+                            Toast.makeText(RegisterActivity.this, "U have registered correctly", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                            startActivity(intent);
                             break;
-                        case ("Użytkownik tego urządzenia posiada już konto!"):
-                            Toast.makeText(com.example.application.RegisterActivity.this, "That device is already registered", Toast.LENGTH_SHORT).show();
-                            break;
-                        case ("Taka nazwa użytkownika już istnieje!"):
-                            Toast.makeText(com.example.application.RegisterActivity.this, "That username is already taken", Toast.LENGTH_SHORT).show();
+                        case ("Already registered"):
+                            Toast.makeText(RegisterActivity.this, "That username is already taken", Toast.LENGTH_SHORT).show();
                             break;
                     }
 
                 } else {
                     Log.d(Tag," sie");
-                    Toast.makeText(com.example.application.RegisterActivity.this, "Error! Please try again!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Error! Please try again!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Toast.makeText(com.example.application.RegisterActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }*/
+    }
 }
