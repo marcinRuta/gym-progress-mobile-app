@@ -1,5 +1,6 @@
 package com.example.gymtracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -7,13 +8,20 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewStub;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String mUsername = "Test";
+    private String mPassword = "Test";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,20 +30,35 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ViewStub stub = (ViewStub) findViewById(R.id.layout_stub);
+        stub.setLayoutResource(R.layout.content_main);
+        View inflated = stub.inflate();
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+
             }
         });
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            mPassword = (String) bundle.get("password");
+            mUsername = (String) bundle.get("username");
+        }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -47,8 +70,16 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_profile) {
+
+            Intent LoginIntent = new Intent(MainActivity.this, ProfileActivity.class);
+            LoginIntent.putExtra("username",mUsername);
+            LoginIntent.putExtra("password",mPassword);
+            startActivity(LoginIntent);
+        }
+        if (id==R.id.action_logout){
+            Intent LoginIntent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(LoginIntent);
         }
 
         return super.onOptionsItemSelected(item);

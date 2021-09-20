@@ -24,6 +24,9 @@
         <activity android:name=".RegisterActivity"
             android:theme="@style/Theme.GymTracker.NoActionBar"
             />
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/Theme.GymTracker.NoActionBar"
+            />
         <activity android:name=".MainActivity"
             android:theme="@style/Theme.GymTracker.NoActionBar"/>
 
