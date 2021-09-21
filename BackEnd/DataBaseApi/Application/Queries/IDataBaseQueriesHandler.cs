@@ -9,5 +9,7 @@ namespace DataBaseApi.Application.Queries
     public interface IDataBaseQueriesHandler
     {
         Response CheckCombination(string username, string password);
+        Response CheckUserDetails(string username, string password);
+        UserDetails GetUserDetails(string username, string password);
     }
 }

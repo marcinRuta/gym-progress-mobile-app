@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataBaseApi.Domain.Daos
 {
-    public class User : Entity
+    public class Users : Entity
     {
         public string Name { get; private set; }
         public string Surname { get; private set; }
@@ -15,12 +15,12 @@ namespace DataBaseApi.Domain.Daos
         public string TelephoneNumber { get; private set; }
         public IList<TrainingSession> TrainingSessions { get; private set; } = new List<TrainingSession>();
 
-        public User(int id, string name, string surname, string email, string telephoneNumber) : base(id)
+        public Users(int Id, string Name, string Surname, string Email, string TelephoneNumber) : base(Id)
         {
-            Name = name;
-            Surname = surname;
-            Email = email;
-            TelephoneNumber = telephoneNumber;
+            this.Name = Name;
+            this.Surname = Surname;
+            this.Email = Email;
+            this.TelephoneNumber = TelephoneNumber;
         }
         public void AddTrainingSession(TrainingSession session)
         {

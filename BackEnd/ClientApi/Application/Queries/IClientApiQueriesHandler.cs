@@ -12,5 +12,6 @@ namespace ClientApi.Application.Queries
         Response RegisterUser(AddUserCredentialCommand credential);
         Response LoginUser(AddUserCredentialCommand credential);
         Response AddUserDetails(AddUserDetailsCommand details, UserCredential credentials);
+        UserDetails GetUserDetails(string username, string password);
     }
 }

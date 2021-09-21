@@ -8,6 +8,7 @@ using System.Data;
 using DataBaseApi.Domain.Daos;
 using DataBaseApi.Infrastructure;
 using System.Data.SqlClient;
+using DataBaseApi.Application.Dtos;
 
 namespace DataBaseApi.Domain
 {
@@ -41,7 +42,7 @@ namespace DataBaseApi.Domain
                         if (!(userCredentials.UserDetails == null))
                         {
                             const string insertUserQuery = @"INSERT INTO Users (Name, Surname, Email, TelephoneNumber) VALUES (@name, @surname, @email, @telephoneNumber);";
-                            User newUser = userCredentials.UserDetails;
+                            Users newUser = userCredentials.UserDetails;
                             int UserId = await dbConnection.QueryFirstAsync<int>(insertUserQuery + ";" + getAddedRowIdQueryQuery, new { name = newUser.Name, surname = newUser.Surname, email = newUser.Email, telephoneNumber = newUser.TelephoneNumber }, transaction);
 
                             const string updateUserCredentialsQuery = @"UPDATE UsersCredentials SET UserID =@userId WHERE Id=@userCredentialsId";
@@ -91,7 +92,7 @@ namespace DataBaseApi.Domain
                 }
             }
         }
-        public async Task AddUserDetails(User userDetails, int credentialId)
+        public async Task AddUserDetails(Users userDetails, int credentialId)
         {
             const string getAddedRowIdQueryQuery = @"SELECT CAST(SCOPE_IDENTITY() as int)";
 
@@ -123,40 +124,72 @@ namespace DataBaseApi.Domain
             }
         }
 
-
-
-
-        /*public async Task<IEnumerable<Doctor>> GetAllAsync()
+        public int CheckUserDetails(string username, string password)
         {
             using (var dbConnection = new SqlConnection(Constants.connectionString))
             {
 
-                //otwarcie połączenia tym razem nie jest konieczne, Dapper zrobi to automatycznie w razie potrzeby
-                //poprzednim razem otwarcia połączenia wymagało utworzenie transakcji
-                const string selectDoctorSpecializationQuery = @"SELECT * FROM DoctorSpecialization";
+                dbConnection.Open();
 
-                var doctorsSpecializations = (await dbConnection.QueryAsync(selectDoctorSpecializationQuery)).Select(x => new { SpecializationId = x.SpecializationId, DoctorId = x.DoctorId });
 
-                const string selectDoctorQuery = @"SELECT * FROM Doctor";
-
-                var doctors = await dbConnection.QueryAsync<Doctor>(selectDoctorQuery);
-
-                const string selectSpecializationsQuery = @"SELECT * FROM Specialization";
-
-                var specializations = await dbConnection.QueryAsync<Specialization>(selectSpecializationsQuery);
-
-                foreach (var doctor in doctors)
+                using (DbTransaction transaction = dbConnection.BeginTransaction())
                 {
-                    var specializationsIdForGivenDoctor = doctorsSpecializations.Where(x => x.DoctorId == doctor.Id).Select(x => x.SpecializationId);
-                    var specializationsForGivenDoctor = specializations.Where(x => specializationsIdForGivenDoctor.Contains(x.Id));
-                    doctor.AddSpecializations(specializationsForGivenDoctor);
+                    try
+                    {
+                        const string selectCredentialQuery = @"Select UserId FROM UsersCredentials Where Username=@username and Password=@password";
+
+                        var UserCredentialsId = dbConnection.Query<int>(selectCredentialQuery, new { username = username, password = password }, transaction);
+
+                        List<int> idsAsInt = UserCredentialsId.ToList();
+
+                        transaction.Commit();
+
+                        return idsAsInt[0];
+                    }
+                    catch (Exception e)
+                    {
+
+                        return 0;
+                    }
                 }
-
-                return doctors;
             }
-        }*/
+        }
+
+        public UserDetails GetUserDetails(string username, string password)
+        {
+
+            int UserDetailsId = CheckUserDetails(username, password);
+            using (var dbConnection = new SqlConnection(Constants.connectionString))
+            {
+
+                dbConnection.Open();
 
 
+                using (DbTransaction transaction = dbConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        const string selectDetailsQuery = @"Select * FROM Users Where Id=@id";
 
+                       var Users = dbConnection.Query<Users>(selectDetailsQuery, new { Id=UserDetailsId }, transaction);
+
+                        var userDetails = new List<UserDetails>();
+                        foreach(var user in Users)
+                        {
+                            userDetails.Add( new UserDetails ( user.Name ,user.Surname ,user.Email, user.TelephoneNumber ));
+                        }
+
+                        transaction.Commit();
+
+                        return userDetails[0];
+                    }
+                    catch (Exception e)
+                    {
+
+                        throw new ArgumentException();
+                    }
+                }
+            }
+        }
     }
 }

@@ -51,7 +51,7 @@ namespace DataBaseApi.Application.Commands
                 return failedResponse;
             }
 
-            var userDetails = new User(0, userDetailsCommand.Name, userDetailsCommand.Surname, userDetailsCommand.Email, userDetailsCommand.TelephoneNumber);
+            var userDetails = new Users(0, userDetailsCommand.Name, userDetailsCommand.Surname, userDetailsCommand.Email, userDetailsCommand.TelephoneNumber);
             dataBaseRepository.AddUserDetails(userDetails, id);
             var response = new Response("Succesufully updated details");
 

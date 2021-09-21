@@ -52,6 +52,11 @@ namespace ClientApi.Controllers
             var credentials = new UserCredential(username, password);
             return this.clientApiQueriesHandler.AddUserDetails(details, credentials);
         }
-
+        [HttpGet("UserDetails")]
+        public UserDetails GetUserDetails([FromHeader] string username, [FromHeader] string password)
+        {
+            
+            return this.clientApiQueriesHandler.GetUserDetails(username,password);
+        }
     }
 }

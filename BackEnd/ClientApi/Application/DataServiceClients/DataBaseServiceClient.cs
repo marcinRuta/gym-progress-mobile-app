@@ -44,6 +44,29 @@ namespace ClientApi.Application.DataServiceClients
 
         }
 
+        public async Task<UserDetails> GetUserDetails(string username, string password)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get,
+               Constants.dataBaseAddress + $"UserDetails");
+
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("username", username);
+            request.Headers.Add("password", password);
+
+            var client = clientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+
+            return await JsonSerializer.DeserializeAsync<UserDetails>(responseStream, options);
+        }
+
         public async Task<Response> LoginUser(AddUserCredentialCommand credential)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,

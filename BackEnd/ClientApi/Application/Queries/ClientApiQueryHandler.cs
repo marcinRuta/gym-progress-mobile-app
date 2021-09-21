@@ -22,6 +22,11 @@ namespace ClientApi.Application.Queries
             return this.dataBaseServiceClient.AddUserDetails(details, credentials).Result;
         }
 
+        public UserDetails GetUserDetails(string username, string password)
+        {
+            return dataBaseServiceClient.GetUserDetails(username, password).Result;
+        }
+
         public Response LoginUser(AddUserCredentialCommand credential)
         {
             return dataBaseServiceClient.LoginUser(credential).Result;

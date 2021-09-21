@@ -11,7 +11,7 @@ namespace DataBaseApi.Domain.Daos
     {
         public string Username { get; private set; }
         public string Password { get; private set; }
-        public User UserDetails { get; private set; }
+        public Users UserDetails { get; private set; }
 
         public UserCredentials(int id, string username, string password) : base(id)
         {
@@ -19,7 +19,7 @@ namespace DataBaseApi.Domain.Daos
             Password = password;
         }
 
-        public void AddUserDetails(User user)
+        public void AddUserDetails(Users user)
         {
             this.UserDetails = user;
         }

@@ -56,6 +56,16 @@ namespace DataBaseApi.Controllers
             return dataBaseCommandHandler.AddUserDetails(details, credentials);
         }
 
+        [HttpGet("checkUserDetails")]
+        public Response CheckUserDetails([FromHeader] string username, [FromHeader] string password)
+        {
+            return dataBaseQueriesHandler.CheckUserDetails(username, password);
+        }
 
+        [HttpGet("UserDetails")]
+        public UserDetails GetUserDetails([FromHeader] string username, [FromHeader] string password)
+        {
+            return dataBaseQueriesHandler.GetUserDetails(username, password);
+        }
     }
 }
