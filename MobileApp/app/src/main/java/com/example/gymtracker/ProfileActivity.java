@@ -30,6 +30,7 @@ public class ProfileActivity  extends AppCompatActivity {
     APIInterface apiInterface;
     private String mUsername = "Test";
     private String mPassword = "Test";
+    UserDetails mUserDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class ProfileActivity  extends AppCompatActivity {
             mUsername = (String) bundle.get("username");
         }
 
+        GetDetails();
         mButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +70,7 @@ public class ProfileActivity  extends AppCompatActivity {
                 }
             }
         });
+
 
     }
     private  boolean ValidateEdit(){
@@ -106,6 +109,35 @@ public class ProfileActivity  extends AppCompatActivity {
                 else {
                     Toast.makeText(ProfileActivity.this, "Error! Please try again!", Toast.LENGTH_SHORT).show();
 
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Toast.makeText(ProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void GetDetails(){
+        Call call =apiInterface.getDetails(mUsername,mPassword);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+
+                if (response.isSuccessful()){
+                    UserDetails resObj=(UserDetails) response.body();
+                    mUserDetails=resObj;
+                    if(!mUserDetails.name.equals("No details submitted")){
+                        mTextName.setText(mUserDetails.name);
+                        mTextSurname.setText(mUserDetails.surname);
+                        mTextEmail.setText(mUserDetails.email);
+                        mTextPhone.setText(mUserDetails.telephoneNumber);
+                    }
+                }
+
+                else{
+                    Toast.makeText(ProfileActivity.this, "Error! Please try again!", Toast.LENGTH_SHORT).show();
                 }
             }
 
