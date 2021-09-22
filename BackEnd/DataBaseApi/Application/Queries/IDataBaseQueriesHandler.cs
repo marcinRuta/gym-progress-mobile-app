@@ -11,5 +11,7 @@ namespace DataBaseApi.Application.Queries
         Response CheckCombination(string username, string password);
         Response CheckUserDetails(string username, string password);
         UserDetails GetUserDetails(string username, string password);
+
+        Response AddTrainingSession(string username, string password, TrainingSessions session);
     }
 }

@@ -14,5 +14,6 @@ namespace ClientApi.Application.DataServiceClients
         Task<Response> AddUserDetails(AddUserDetailsCommand details, UserCredential credentials);
 
         Task<UserDetails> GetUserDetails(string username, string password);
+        Task<Response> AddTrainingSession(string username, string password, TrainingSessions session);
     }
 }

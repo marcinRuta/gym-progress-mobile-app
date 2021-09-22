@@ -58,5 +58,12 @@ namespace ClientApi.Controllers
             
             return this.clientApiQueriesHandler.GetUserDetails(username,password);
         }
+        [HttpPost("TrainingSession")]
+        public Response AddTrainingSession([FromHeader] string username, [FromHeader] string password, [FromBody] TrainingSessions session)
+        {
+            
+            return this.clientApiQueriesHandler.AddTrainingSession(username, password, session);
+        }
+
     }
 }

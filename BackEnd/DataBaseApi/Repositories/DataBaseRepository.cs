@@ -191,5 +191,51 @@ namespace DataBaseApi.Domain
                 }
             }
         }
+
+        public int AddTrainingSession(int id, TrainingSessions session)
+        {
+            const string getAddedRowIdQueryQuery = @"SELECT CAST(SCOPE_IDENTITY() as int)";
+
+
+            using (var dbConnection = new SqlConnection(Constants.connectionString))
+            {
+
+                dbConnection.Open();
+
+
+                using (DbTransaction transaction = dbConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        const string insertExcersiseNameQuery = @"INSERT INTO Exercises (ExerciseName) VALUES (@excersiseName);";
+                        const string insertSetQuery = @"INSERT INTO Sets (Weight, Repetitions, ExerciseSessionId) VALUES (@weight, @repetitions, @excersiseSessionId);";
+                        const string insertExcerciseSessionQuery = @"INSERT INTO ExerciseSessions (ExerciseId, TrainingId) VALUES (@excersiseId, @trainingId);";
+                        const string insertTrainingSessionQuery = @"INSERT INTO TrainingSessions (SessionDate, UserId) VALUES (@sessionDate, @userId);";
+
+
+                        var TrainingSessionId= dbConnection.Query<int>(insertTrainingSessionQuery+ ";" + getAddedRowIdQueryQuery, new { sessionDate=session.Date, userId=id }, transaction);
+                        foreach (var exSession in session.ExcersiseSessions)
+                        {
+                            var ExId = dbConnection.Query<int>(insertExcersiseNameQuery + ";" + getAddedRowIdQueryQuery, new { excersiseName=exSession.ExcersiseName }, transaction);
+                            var ExSessionId= dbConnection.Query<int>(insertExcerciseSessionQuery + ";" + getAddedRowIdQueryQuery, new { excersiseId=ExId, trainingId = TrainingSessionId }, transaction);
+
+                            foreach(var exSet in exSession.ExersiseSets)
+                            {
+                                var SetId= dbConnection.Query<int>(insertSetQuery + ";" + getAddedRowIdQueryQuery, new { weight=exSet.Weight, repetitions=exSet.Repetitions, excersiseSessionId=ExSessionId }, transaction);
+                            }
+                        }
+
+                        transaction.Commit();
+
+                        return 0;
+                    }
+                    catch (Exception e)
+                    {
+                        transaction.Rollback();
+                        return 1;
+                    }
+                }
+            }
+        }
     }
 }

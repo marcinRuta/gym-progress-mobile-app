@@ -22,7 +22,7 @@ namespace DataBaseApi.Application.Commands
         }
         public Response RegisterUser(AddUserCredentialCommand credentialCommand)
         {
-            UserCredentials userCredentials = new(1, credentialCommand.Username, credentialCommand.Password);
+            Domain.Daos.UserCredentials userCredentials = new(1, credentialCommand.Username, credentialCommand.Password);
 
 
             var id = dataBaseRepository.CheckAndReturnUsernamePasswordCombination(userCredentials.Username, userCredentials.Password);
@@ -41,7 +41,7 @@ namespace DataBaseApi.Application.Commands
             }
         }
 
-        public Response AddUserDetails(AddUserDetailsCommand userDetailsCommand, UserCredential credentials)
+        public Response AddUserDetails(AddUserDetailsCommand userDetailsCommand, Dtos.UserCredential credentials)
         {
             var id = dataBaseRepository.CheckAndReturnUsernamePasswordCombination(credentials.Username, credentials.Password);
             if (id == 0)

@@ -36,5 +36,10 @@ namespace ClientApi.Application.Queries
         {
             return dataBaseServiceClient.RegisterUser(credential).Result;
         }
+
+        public Response AddTrainingSession(string username, string password, TrainingSessions session)
+        {
+            return dataBaseServiceClient.AddTrainingSession( username,  password, session).Result;
+        }
     }
 }

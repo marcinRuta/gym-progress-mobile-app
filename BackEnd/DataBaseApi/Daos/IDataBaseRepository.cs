@@ -14,5 +14,7 @@ namespace DataBaseApi.Domain.Daos
         Task AddUserDetails(Users userDetails, int credentialsId);
         int CheckUserDetails(string username, string password);
         UserDetails GetUserDetails(string username, string password);
+
+        int AddTrainingSession(int id, TrainingSessions session);
     }
 }

@@ -45,14 +45,14 @@ namespace DataBaseApi.Controllers
         [HttpPost("registerUser")]
         public Response RegisterUser([FromBody] AddUserCredentialCommand credential)
         {
-            
+
             return dataBaseCommandHandler.RegisterUser(credential);
         }
 
         [HttpPost("addUserDetails")]
         public Response AddUserDetails([FromHeader] string username, [FromHeader] string password, [FromBody] AddUserDetailsCommand details)
         {
-            var credentials = new UserCredential(username, password);
+            var credentials = new Application.Dtos.UserCredential(username, password);
             return dataBaseCommandHandler.AddUserDetails(details, credentials);
         }
 
@@ -66,6 +66,12 @@ namespace DataBaseApi.Controllers
         public UserDetails GetUserDetails([FromHeader] string username, [FromHeader] string password)
         {
             return dataBaseQueriesHandler.GetUserDetails(username, password);
+        }
+
+        [HttpPost("TrainingSession")]
+        public Response AddTrainingSession([FromHeader] string username, [FromHeader] string password, [FromBody] TrainingSessions session)
+        {
+            return dataBaseQueriesHandler.AddTrainingSession(username, password, session);
         }
     }
 }

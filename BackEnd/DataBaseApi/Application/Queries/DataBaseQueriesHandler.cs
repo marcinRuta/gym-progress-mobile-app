@@ -16,6 +16,20 @@ namespace DataBaseApi.Application.Queries
             this.dataBaseRepository = dataBaseRepository;
         }
 
+        public Response AddTrainingSession(string username, string password, TrainingSessions session)
+        {
+            var UserId = dataBaseRepository.CheckUserDetails(username, password);
+
+            var result = dataBaseRepository.AddTrainingSession(UserId, session);
+
+            if(result == 0)
+            {
+                return new Response("Succesfully added session");
+            }
+
+            return new Response("Something went wrong");
+        }
+
         public Response CheckCombination(string username, string password)
         {
             var result = dataBaseRepository.CheckAndReturnUsernamePasswordCombination(username,password);

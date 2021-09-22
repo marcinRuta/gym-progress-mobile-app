@@ -13,5 +13,6 @@ namespace ClientApi.Application.Queries
         Response LoginUser(AddUserCredentialCommand credential);
         Response AddUserDetails(AddUserDetailsCommand details, UserCredential credentials);
         UserDetails GetUserDetails(string username, string password);
+        Response AddTrainingSession(string username, string password,TrainingSessions session);
     }
 }

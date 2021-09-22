@@ -19,6 +19,30 @@ namespace ClientApi.Application.DataServiceClients
             this.clientFactory = clientFactory;
         }
 
+        public async Task<Response> AddTrainingSession(string username, string password, TrainingSessions session)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post,
+                Constants.dataBaseAddress + $"TrainingSession");
+
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("username", username);
+            request.Headers.Add("password", password);
+            var body = JsonSerializer.Serialize(session);
+            request.Content = new StringContent(body, Encoding.UTF8, "application/json");
+            var client = clientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+
+            return await JsonSerializer.DeserializeAsync<Response>(responseStream, options);
+        }
+
         public async Task<Response> AddUserDetails(AddUserDetailsCommand details, UserCredential credentials)
         {
             var request = new HttpRequestMessage(HttpMethod.Post,

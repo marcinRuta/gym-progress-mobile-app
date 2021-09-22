@@ -8,7 +8,7 @@ namespace ClientApi
     public class Constants
     {
        // public const string dataBaseAddress = "http://localhost:49150/DataBase/";
-        public static string dataBaseAddress = Environment.GetEnvironmentVariable("dataBaseAddress");
+       public static string dataBaseAddress = Environment.GetEnvironmentVariable("dataBaseAddress");
 
     }
 }
