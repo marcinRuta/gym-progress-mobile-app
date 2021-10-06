@@ -5,7 +5,7 @@ CREATE TABLE [Users] (
     [Name] nvarchar(max) NULL,
     [Surname] nvarchar(max) NULL,
     [Email] nvarchar(max) NULL,
-    [TelephoneNumber] int NULL,
+    [TelephoneNumber] nvarchar(max) NULL,
     CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
 );
 GO
@@ -30,9 +30,12 @@ GO
 CREATE TABLE [ExerciseSessions] (
     [Id] int NOT NULL IDENTITY,
     [ExerciseId] int NOT NULL,
+    [TrainingId] int NOT NULL,
     CONSTRAINT [PK_ExerciseSessions] PRIMARY KEY ([Id]),
     CONSTRAINT FK_ExerciseSession FOREIGN KEY (ExerciseId)
     REFERENCES Exercises(Id),
+    CONSTRAINT FK_ExerciseTraining FOREIGN KEY (TrainingId)
+    REFERENCES TrainingSessions(Id),
 );
 GO
 
